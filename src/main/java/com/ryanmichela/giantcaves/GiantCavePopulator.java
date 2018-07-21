@@ -115,11 +115,11 @@ public class GiantCavePopulator extends BlockPopulator {
 
     private boolean isWater(Block block) {
         Material material = block.getType();
-        return material == Material.WATER || material == Material.STATIONARY_WATER;
+        return material == Material.WATER || material == Material.WATER;
     }
 
     private boolean isLava(Block block) {
         Material material = block.getType();
-        return material == Material.LAVA || material == Material.STATIONARY_LAVA;
+        return material == Material.LAVA || material == Material.LAVA;
     }
 }
