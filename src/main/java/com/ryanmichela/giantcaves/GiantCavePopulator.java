@@ -40,7 +40,7 @@ public class GiantCavePopulator extends BlockPopulator {
         this.plugin = plugin;
         material = Material.AIR;
         toucher = new BlockToucher(plugin);
-        plugin.getServer().getPluginManager().registerEvents(new GCWaterHandler(config), plugin);
+        //plugin.getServer().getPluginManager().registerEvents(new GCWaterHandler(config), plugin);
     }
 
     @Override
@@ -50,6 +50,7 @@ public class GiantCavePopulator extends BlockPopulator {
         for (int x = 0; x < 16; x++) {
             for (int z = 0; z < 16; z++) {
                 for (int y = config.caveBandMax; y >= config.caveBandMin; y--) {
+                    // Modified for better supporting of ocean
                     if (gcRandom.isInGiantCave(x, y, z)) {
                         Block block = source.getBlock(x, y, z);
                         Block blockUp = block.getRelative(BlockFace.UP);
@@ -115,11 +116,11 @@ public class GiantCavePopulator extends BlockPopulator {
 
     private boolean isWater(Block block) {
         Material material = block.getType();
-        return material == Material.WATER || material == Material.WATER;
+        return material == Material.WATER;
     }
 
     private boolean isLava(Block block) {
         Material material = block.getType();
-        return material == Material.LAVA || material == Material.LAVA;
+        return material == Material.LAVA;
     }
 }

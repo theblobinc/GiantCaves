@@ -15,6 +15,7 @@
 
 package com.ryanmichela.giantcaves;
 
+import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -30,6 +31,17 @@ import java.util.Map;
 public class GCPlugin extends JavaPlugin {
 
     public void onEnable() {
+        String name = this.getServer().getClass().getPackage().getName();
+        String versionFull = name.substring(name.lastIndexOf(".") + 1);
+        String[] vn = versionFull.split("_");
+
+        if (Integer.parseInt(vn[1]) < 13) {
+            getLogger().info(
+                    "This version of GiantCaves requires Minecraft 1.13 or higher. Your version appears to be older.");
+            Bukkit.getPluginManager().disablePlugin(this);
+            return;
+        }
+
         // create the plugin directory if it does not exist
         this.saveDefaultConfig();
         getServer().getPluginManager().registerEvents(new GCWorldListener(), this);
