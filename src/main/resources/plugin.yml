@@ -1,5 +1,5 @@
 name: GiantCaves
-version: "1.13-R0.1"
+version: "1.13.1-R0.1"
 author: Deltahat
 main: com.ryanmichela.giantcaves.GCPlugin
 prefix: "GiantCaves"

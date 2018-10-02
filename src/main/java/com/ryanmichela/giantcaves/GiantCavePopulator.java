@@ -19,6 +19,7 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.block.data.Levelled;
 import org.bukkit.generator.BlockPopulator;
 import org.bukkit.plugin.Plugin;
 
@@ -26,7 +27,8 @@ import java.util.Random;
 
 public class GiantCavePopulator extends BlockPopulator {
 
-    private final BlockFace[] faces = { BlockFace.UP, BlockFace.NORTH, BlockFace.SOUTH, BlockFace.EAST, BlockFace.WEST };
+    private final BlockFace[] faces = { BlockFace.UP, BlockFace.NORTH, BlockFace.SOUTH, BlockFace.EAST,
+            BlockFace.WEST };
 
     private final Config config;
     private final Plugin plugin;
@@ -40,7 +42,6 @@ public class GiantCavePopulator extends BlockPopulator {
         this.plugin = plugin;
         material = Material.AIR;
         toucher = new BlockToucher(plugin);
-        //plugin.getServer().getPluginManager().registerEvents(new GCWaterHandler(config), plugin);
     }
 
     @Override
@@ -67,7 +68,7 @@ public class GiantCavePopulator extends BlockPopulator {
                         } else {
                             block.setType(material);
 
-                            // Mark adjacent blocks for update, iff they are not in the cave
+                            // Mark adjacent blocks for update, if they are not in the cave
                             for (BlockFace direction : faces) {
                                 Block b = block.getRelative(direction);
                                 if (isWater(b) || isLava(b)) {
@@ -104,7 +105,7 @@ public class GiantCavePopulator extends BlockPopulator {
 
     private boolean isSurfaceWater(Block block) {
         // Walk the column of blocks above block looking sea level
-        while (isWater(block)) {
+        while (isStillWater(block)) {
             if (block.getY() >= block.getWorld().getSeaLevel() - 1) {
                 return true;
             } else {
@@ -115,12 +116,23 @@ public class GiantCavePopulator extends BlockPopulator {
     }
 
     private boolean isWater(Block block) {
-        Material material = block.getType();
-        return material == Material.WATER;
+        return block.getType() == Material.WATER;
     }
 
     private boolean isLava(Block block) {
-        Material material = block.getType();
-        return material == Material.LAVA;
+        return block.getType() == Material.LAVA;
+    }
+
+    private int fluidLevel(Block block) {
+        Levelled levelled = (Levelled) block.getBlockData();
+        return levelled.getLevel();
+    }
+
+    private boolean isStillWater(Block block) {
+        return isWater(block) && fluidLevel(block) == 0;
+    }
+
+    private boolean isStillLava(Block block) {
+        return isLava(block) && fluidLevel(block) == 0;
     }
 }

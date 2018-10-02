@@ -35,9 +35,9 @@ public class GCPlugin extends JavaPlugin {
         String versionFull = name.substring(name.lastIndexOf(".") + 1);
         String[] vn = versionFull.split("_");
 
-        if (Integer.parseInt(vn[1]) < 13) {
+        if (Integer.parseInt(vn[1]) < 13 || versionFull.equals("v1_13_R1")) {
             getLogger().info(
-                    "This version of GiantCaves requires Minecraft 1.13 or higher. Your version appears to be older.");
+                    "This version of GiantCaves requires Minecraft 1.13.1 or higher. Your version appears to be older.");
             Bukkit.getPluginManager().disablePlugin(this);
             return;
         }

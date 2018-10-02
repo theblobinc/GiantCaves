@@ -62,6 +62,10 @@ Below are extended descriptions of each of the configuration keys:
 
                        Null Terrain - https://github.com/Elizacat/NullTerrain
 
+Dev Notes
+=================================
+GCWaterHandler.java and ReflectionUtil.java are currently unused in 1.13+ but have been left in the code base for the
+time being.
 
 Credits
 =================================
